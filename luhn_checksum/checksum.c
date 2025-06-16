@@ -24,8 +24,8 @@ int main(int argc, char *argv[]) {
     return 3;
   }
   int digitSum = getDigitSum(number, isSecondDigit);
-  int result = digitSum % 10;
-  if (result == 0) {
+  // If remainder is 0 digit is valid
+  if (digitSum % 10 == 0) {
     printf("Number: %lld is valid luhn number.\n", number);
     return 0;
   } else {
@@ -40,22 +40,20 @@ int getDigitSum(long long int number, bool isSecond) {
   int lastDigit;
   int sum = 0;
 
-  // While number is greater than 0 divide it by 10
   while (number > 0) {
+    lastDigit = number % 10;
     // If it is second digit get it by getting reminder of 10 from number
     if (isSecond) {
-      lastDigit = number % 10;
       lastDigit *= 2;
       // If last digit multiplied by 2 is grater than 10, get it's
       // last digit of dividing it by reminder of 10 and add it to 1 
-      if (lastDigit >= 10) {
+      if (lastDigit > 9) {
         lastDigit -= 9;
       }
       // Sum of all last digit summed together
       sum += lastDigit;
     }
     if (!isSecond) {
-      lastDigit = number % 10;
       sum += lastDigit;
     }
     number /= 10;
