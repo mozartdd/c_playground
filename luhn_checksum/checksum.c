@@ -18,10 +18,8 @@ int main(int argc, char *argv[]) {
   findLastDigit(number);
 }
 
-// If two number sum is greater than 10
+// Finds last digit of int that need to be checked
 void findLastDigit(long long int number) {
   number %= 10;
   printf("%lld\n", number);
 }
-
-
