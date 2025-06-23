@@ -3,17 +3,23 @@
 #include <stdlib.h>
 
 int main(void) {
+  // String of num which will be used to convert to array on digits
   char stringOfNums[100] = "23,221,5225,1521,15225,1223,215,2";
   int arrayOfNums[100];
-  const char coma[2] = ",";
+  // Token will hold information of current number/digit separated by come
   char *token;
   int i = 0;
 
-  token = strtok(stringOfNums, coma);
+  // Separates stringOfNums to separate digits at place of comma
+  token = strtok(stringOfNums, ",");
   
+  // While token is not NULL add token to arrayOfNums
   while(token) {
-    arrayOfNums[i] = atol(token);
-    token = strtok(NULL, coma);
+    if (i >= 100) return 1;
+    arrayOfNums[i] = atoi(token);
+    token = strtok(NULL, ",");
     i++;
   }
+  printf("%d\n", arrayOfNums[i - 1]);
+  return 0;
 }
