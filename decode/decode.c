@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-int returnReminder(int number, bool value);
+int returnReminder(int number);
 void turnToIntegers(int arrayOfInts[], char *arrayOfString[], int length);
 bool isNumber = true;
 // 0 = uppercase, 1 = lowercase, 2 = symbol
@@ -14,10 +14,9 @@ int main(int argc, char *argv[]) {
     printf("Key must consist from at least 3 numbers\n");
     return 1;
   }
-  // Array which holds alphabetical letters
-  char alphabet[26];
+
   // Dynamical memory allocation to hold array of array on integers
-  int *integerArray = malloc((argc - 1) * sizeof(int));
+  int integerArray[argc-1];
   if (integerArray == NULL) {
     printf("Memory allocation failed\n");
     return 2;
@@ -26,11 +25,16 @@ int main(int argc, char *argv[]) {
   int result;
 
   for (int i = 0; i < argc - 1; i++) {
-    result = returnReminder(integerArray[i], isNumber);
-    printf("%d\n", result);
+    result = returnReminder(integerArray[i]);
+    if (result == 0) {
+        printf("");
+    } else if (current == 0) {
+        printf("%c", result + 'A' - 1);
+    } else if (current == 1) {
+        printf("%c", result + 'a' - 1);
+    }
   }
-
-  free(integerArray);
+  printf("\n");
   return 0;
 }
 
@@ -41,18 +45,18 @@ void turnToIntegers(int arrayOfInts[], char *arrayOfString[], int length) {
   }
 }
 
-// Return reminder of letter divided by 26 or 8 and modifies global flags
-int returnReminder(int number, bool flag) {
-  int result = flag ? (number % 26) : (number % 8);
+// Return reminder of letter or symbol divided by 26 or 8 and modifies global flags
+int returnReminder(int number) {
+  int result = isNumber ? (number % 27) : (number % 9);
   if (result == 0) {
     current++;
   }
   if (current == 2) {
-    flag = false;
+    isNumber = false;
   }
-  if (current == 3) {
+  else if (current == 3) {
     current = 0;
-    flag = true;
+    isNumber = true;
   }
   return result;
 }
